@@ -25,14 +25,24 @@ public class Account {
         this.lastAccessDate = lastAccessDate;
     }
 
+    public Date getLastAccessDate() {
+        return this.lastAccessDate;
+    }
+
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public double getBalance() {
+        return this.balance;
     }
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
-    public
+    public List<Transaction> getTransactions() {
+        return this.transactions;
+    }
 
 }
