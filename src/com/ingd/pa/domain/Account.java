@@ -7,6 +7,8 @@ public class Account {
 
     private int accountId;
 
+    private int customerId;
+
     private Date lastAccessDate;
 
     private double balance;
@@ -19,6 +21,14 @@ public class Account {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public void setLastAccessDate(Date lastAccessDate) {
