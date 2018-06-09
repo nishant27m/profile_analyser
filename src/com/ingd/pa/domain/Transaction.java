@@ -12,6 +12,16 @@ public class Transaction {
 
     private int accountId;
 
+    private TransactionType transactionType;
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public int getTransactionId() {
         return transactionId;
     }
