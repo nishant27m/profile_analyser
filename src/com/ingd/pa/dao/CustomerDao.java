@@ -30,7 +30,7 @@ public class CustomerDao {
      * @param customerId customer id.
      * @param startDate start date
      * @param endDate end date
-     * @return
+     * @return instance of Customer.
      */
     public Customer getCustomer(int customerId, Date startDate, Date endDate) {
         Customer customer = new Customer();
