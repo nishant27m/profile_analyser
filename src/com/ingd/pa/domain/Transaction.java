@@ -14,6 +14,14 @@ public class Transaction {
 
     private TransactionType transactionType;
 
+    public Transaction(int transactionId, Date transactionDate, double amount, int accountId, TransactionType transactionType) {
+        this.transactionId = transactionId;
+        this.transactionDate = transactionDate;
+        this.amount = amount;
+        this.accountId = accountId;
+        this.transactionType = transactionType;
+    }
+
     public TransactionType getTransactionType() {
         return transactionType;
     }
