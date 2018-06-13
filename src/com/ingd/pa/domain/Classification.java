@@ -1,7 +1,7 @@
 package com.ingd.pa.domain;
 
 
-public enum Type {
+public enum Classification {
     //Takes over 50% of their transactions in the month after midday (count of transactions)
     Afternoon_Person,
     // Spends over 80% of their deposits every month ($ value of deposits)
