@@ -15,6 +15,15 @@ public class CommonUtility {
     public static Date getDate(String date, String format) throws Exception {
         DateFormat formatter = new SimpleDateFormat(format);
         return formatter.parse(date);
-
     }
+
+    public static Date getFirstDate(String month, String year) {
+        return null;
+    }
+
+    public static Date getLastDate(String month, String year) {
+        return null;
+    }
+
+
 }

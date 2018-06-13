@@ -38,6 +38,12 @@ public class ProfileAnalyserService {
         properties.put("customer_id", customerId);
         Set<Classification> classifications = getAllRules().stream().map(rule -> rule.execute(properties))
                 .filter(value -> value != null).collect(Collectors.toSet());
+
+        if(classifications.contains(Classification.Big_Spender) && classifications.contains(Classification.Fast_Spender)) {
+            classifications.add(Classification.Potential_Loan);
+            classifications.remove(Classification.Big_Spender);
+            classifications.remove(Classification.Fast_Spender);
+        }
         Output output = new Output();
         output.setClassifications(classifications);
         output.setBalance(transactionDao.getBalance(customerId, new Date()));

@@ -13,5 +13,7 @@ public enum Classification {
     //Makes over 50% of their transactions in the month before midday (count of transactions)
     Morning_Person,
     //Spends less than 25% of their deposits every month ($ value of deposits)
-    Potential_Saver
+    Potential_Saver,
+    //If a person is identified as both a Big Spender and a Fast Spender then they should be classified as a Potential Loan customer instead.
+    Potential_Loan
 }
