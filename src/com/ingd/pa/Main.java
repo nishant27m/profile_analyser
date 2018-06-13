@@ -16,11 +16,12 @@ public class Main {
         Scanner reader = new Scanner(System.in);  // Reading from System.in
         System.out.println("Enter customer id (1 / 2/ 3): ");
         int customerId = reader.nextInt(); // Scans the next token of the input as an int.
-        System.out.println("Enter date (e.g. July 2018): ");
+        System.out.println("Enter month (e.g. July): ");
         String sDate = reader.next();
-        String[] dateSplit = sDate.split(" ");
-        Date startDate = CommonUtility.getFirstDate(dateSplit[0], dateSplit[1]);
-        Date endDate = CommonUtility.getLastDate(dateSplit[0], dateSplit[1]);
+        System.out.println("Enter year (e.g. 2018): ");
+        String sYear = reader.next();
+        Date startDate = CommonUtility.getFirstDate(sDate, sYear);
+        Date endDate = CommonUtility.getLastDate(sDate, sYear);
         reader.close();
         ProfileAnalyserService  paService = new ProfileAnalyserService();
         Output output = paService.doAnalysis(customerId, startDate, endDate);
