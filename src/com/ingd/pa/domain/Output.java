@@ -1,5 +1,6 @@
 package com.ingd.pa.domain;
 
+import java.util.List;
 import java.util.Set;
 
 public class Output {
@@ -8,6 +9,11 @@ public class Output {
      * customer classifications.
      */
     private Set<Classification> classifications;
+
+    /**
+     * list of transaction.
+     */
+    private List<Transaction> transactions;
 
     /**
      * balance
@@ -30,5 +36,11 @@ public class Output {
         this.balance = balance;
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
 
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 }

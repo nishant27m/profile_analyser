@@ -32,17 +32,16 @@ public class ProfileAnalyserService {
      * @return list of customer classification.
      */
     public Output doAnalysis(int customerId, Date startDate, Date endDate) throws Exception {
-        Output output = new Output();
-        double asOfbalance = transactionDao.getBalance(customerId, new Date());
-        output.setBalance(asOfbalance);
         Map<String, Object> properties = new HashMap<>();
         properties.put("customer", customerDao.getCustomer(customerId, startDate, endDate));
         properties.put("balance", transactionDao.getBalance(customerId, startDate));
         properties.put("customer_id", customerId);
         Set<Classification> classifications = getAllRules().stream().map(rule -> rule.execute(properties))
                 .filter(value -> value != null).collect(Collectors.toSet());
+        Output output = new Output();
         output.setClassifications(classifications);
-        output.setBalance(asOfbalance);
+        output.setBalance(transactionDao.getBalance(customerId, new Date()));
+        output.setTransactions(customerDao.getCustomer(customerId).getAccounts().get(0).getTransactions());
         return output;
     }
 
