@@ -1,6 +1,7 @@
 package com.ingd.pa.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 /**
@@ -18,11 +19,17 @@ public class CommonUtility {
     }
 
     public static Date getFirstDate(String month, String year) {
-        return null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(year), Integer.parseInt(month), 1);
+        return calendar.getTime();
     }
 
     public static Date getLastDate(String month, String year) {
-        return null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(year), Integer.parseInt(month), 1);
+        int lastDate = calendar.getActualMaximum(Calendar.DATE);
+        calendar.set(Calendar.DATE, lastDate);
+        return calendar.getTime();
     }
 
 
