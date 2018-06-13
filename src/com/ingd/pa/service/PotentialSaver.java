@@ -21,7 +21,7 @@ public class PotentialSaver implements IExecuteRule {
         List<Transaction> transactions = customer.getAccounts().get(0).getTransactions();
         Double spentAmount = transactions.stream().filter(transaction -> transaction.getTransactionType() == TransactionType.DEBIT)
                 .mapToDouble(transaction -> transaction.getAmount()).sum();
-        Double percentage = spentAmount / balance * 100;
+        Double percentage = (spentAmount / balance) * 100;
         return percentage < 25 ? Classification.Potential_Saver : null;
     }
 }

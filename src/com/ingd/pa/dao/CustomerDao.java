@@ -15,13 +15,13 @@ import java.util.function.Function;
  */
 public class CustomerDao {
 
-    private static final String FILE_PATH = "./data/customer.csv";
+    private static final String FILE_PATH = "data/customer.csv";
 
     Function<String, Customer> mapper = line ->  {
         String[] data = line.split(",");
         Customer customer = null;
         try {
-            customer = new Customer(Integer.parseInt(data[0]), data[1], data[2], CommonUtility.getDate(data[3], CommonUtility.SIMPLE_DATE));
+            customer = new Customer(Integer.parseInt(data[0]), data[1], data[2], CommonUtility.getDate(data[3].trim(), CommonUtility.SIMPLE_DATE));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class CustomerDao {
      * @return instance of Customer
      */
     public Customer getCustomer(int customerId) throws Exception {
-        Customer customer = Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        Customer customer = Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                            .filter(cust -> cust.getCustomerId() == customerId).findFirst().get();
         customer.setAccounts(accountDao.getAccounts(customerId));
         return customer;
@@ -54,9 +54,10 @@ public class CustomerDao {
      * @return instance of Customer.
      */
     public Customer getCustomer(int customerId, Date startDate, Date endDate) throws Exception {
-        Customer customer = Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        Customer customer = Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                            .filter(cust -> cust.getCustomerId() == customerId).findFirst().get();
         customer.setAccounts(accountDao.getAccounts(customerId, startDate, endDate));
         return customer;
     }
+
 }

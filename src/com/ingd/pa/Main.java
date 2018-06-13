@@ -28,7 +28,7 @@ public class Main {
         printOutput(output);
     }
 
-    private static void printOutput(Output output) {
+    private static void printOutput(Output output) throws Exception {
         DecimalFormat df2 = new DecimalFormat(".##");
         System.out.println("-----------------------------------------------------------------------------");
         System.out.println("Classification : ");
@@ -38,12 +38,13 @@ public class Main {
         System.out.println("-----------------------------------------------------------------------------");
         System.out.println("Account Balance : "+ df2.format(output.getBalance()));
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%10s %30s %20s %10s %10s", "Transaction Id", "Date", "Amount", "Account Id", "Type");
+        System.out.printf("%10s %20s %20s %10s %10s", "Transaction Id", "Date", "Amount", "Account Id", "Type");
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------");
         for(Transaction transaction : output.getTransactions()){
-            System.out.format("%10d %30s %20d %10d %10s",
-                    transaction.getTransactionId(), transaction.getTransactionDate(), transaction.getAmount()
+            System.out.format("%10d %20s %20.3f %10d %10s",
+                    transaction.getTransactionId(), CommonUtility.getDateInString(transaction.getTransactionDate(), CommonUtility.SIMPLE_FORMAT)
+                    , transaction.getAmount()
                     , transaction.getAccountId(), transaction.getTransactionType());
             System.out.println();
         }

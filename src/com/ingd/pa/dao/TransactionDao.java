@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
  */
 public class TransactionDao {
 
-    private static final String FILE_PATH = "./data/transaction.csv";
+    private static final String FILE_PATH = "data/transaction.csv";
 
     Function<String, Transaction> mapper = line ->  {
         String[] data = line.split(",");
-        TransactionType type = "credit".equals(data[5]) ? TransactionType.CREDIT : TransactionType.DEBIT;
+        TransactionType type = "credit".equals(data[4].trim()) ? TransactionType.CREDIT : TransactionType.DEBIT;
         Transaction transaction = null;
         try {
             transaction = new Transaction(Integer.parseInt(data[0])
-                                                    , CommonUtility.getDate(data[1], CommonUtility.SIMPLE_FORMAT)
-                                                    , Double.parseDouble(data[2])
-                                                    , Integer.parseInt(data[3]), type);
+                                                    , CommonUtility.getDate(data[1].trim(), CommonUtility.SIMPLE_FORMAT)
+                                                    , Double.parseDouble(data[2].trim())
+                                                    , Integer.parseInt(data[3].trim()), type);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class TransactionDao {
      */
     public List<Transaction> getTransactions(int accountId) throws Exception {
         List<Transaction> transactions =
-        Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                 .filter(transaction -> transaction.getAccountId() == accountId)
                 .collect(Collectors.toList());
         return transactions;
@@ -55,7 +55,7 @@ public class TransactionDao {
      */
     public List<Transaction> getTransactions(int accountId, Date startDate, Date endDate) throws Exception {
         List<Transaction> transactions =
-        Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                 .filter(transaction -> transaction.getAccountId() == accountId
                                     && transaction.getTransactionDate().after(startDate)
                                     && transaction.getTransactionDate().before(endDate))
@@ -70,13 +70,18 @@ public class TransactionDao {
      * @return balance.
      */
     public double getBalance(int accountId, Date asofDate) throws Exception {
-        double balance =
-        Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        double credit =
+        Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                 .filter(transaction -> transaction.getAccountId() == accountId
                                     && transaction.getTransactionDate().before(asofDate)
                                     && transaction.getTransactionType() == TransactionType.CREDIT)
                 .mapToDouble(transaction  -> transaction.getAmount()).sum();
-        return balance;
+        double debit = Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
+                .filter(transaction -> transaction.getAccountId() == accountId
+                        && transaction.getTransactionDate().before(asofDate)
+                        && transaction.getTransactionType() == TransactionType.DEBIT)
+                .mapToDouble(transaction  -> transaction.getAmount()).sum();
+        return (credit - debit);
     }
 
 }

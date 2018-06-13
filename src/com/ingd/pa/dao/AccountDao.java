@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
  */
 public class AccountDao {
 
-    private static final String FILE_PATH = "./data/account.csv";
+    private static final String FILE_PATH = "data/account.csv";
 
     Function<String, Account> mapper = line ->  {
         String[] data = line.split(",");
         Account account = null;
         try {
-            account = new Account(Integer.parseInt(data[0]), Integer.parseInt(data[1]), CommonUtility.getDate(data[2], CommonUtility.SIMPLE_FORMAT),
+            account = new Account(Integer.parseInt(data[0].trim()), Integer.parseInt(data[1].trim())
+                    , CommonUtility.getDate(data[2].trim(), CommonUtility.SIMPLE_FORMAT),
                                  Double.parseDouble(data[3]));
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +41,7 @@ public class AccountDao {
      * @return list of accounts.
      */
     public List<Account> getAccounts(int customerId) throws Exception {
-        List<Account> accounts = Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        List<Account> accounts = Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                 .filter(cust -> cust.getCustomerId() == customerId).collect(Collectors.toList());
         accounts.forEach(account -> {
             try {
@@ -60,7 +61,7 @@ public class AccountDao {
      * @return list of accounts.
      */
     public List<Account> getAccounts(int customerId, Date startDate, Date endDate) throws Exception{
-        List<Account> accounts = Files.lines(Paths.get(FILE_PATH)).skip(1).map(mapper)
+        List<Account> accounts = Files.lines(Paths.get(ClassLoader.getSystemResource(FILE_PATH).toURI())).skip(1).map(mapper)
                 .filter(cust -> cust.getCustomerId() == customerId).collect(Collectors.toList());
         accounts.forEach(account -> {
             try {

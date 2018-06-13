@@ -8,7 +8,7 @@ public class Transaction {
 
     private Date transactionDate;
 
-    private double amount;
+    private Double amount;
 
     private int accountId;
 
@@ -26,42 +26,20 @@ public class Transaction {
         return transactionType;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
     public int getTransactionId() {
         return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
     }
 
     public Date getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public int getAccountId() {
         return accountId;
     }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
-
-
 
 }
