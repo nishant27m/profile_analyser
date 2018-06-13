@@ -15,6 +15,13 @@ public class Customer {
 
     private List<Account> accounts;
 
+    public Customer(int customerId , String firstName, String lastName, Date date) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = date;
+    }
+
     public int getCustomerId() {
         return customerId;
     }

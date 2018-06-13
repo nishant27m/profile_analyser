@@ -10,7 +10,9 @@ public class CommonUtility {
 
     public static String SIMPLE_FORMAT = "MM/DD/YYYY HH:mm:SS";
 
-    public static Date getDate(String date, String format) {
+    public static String SIMPLE_DATE = "MM/DD/YYYY";
+
+    public static Date getDate(String date, String format) throws Exception {
         DateFormat formatter = new SimpleDateFormat(format);
         return formatter.parse(date);
 

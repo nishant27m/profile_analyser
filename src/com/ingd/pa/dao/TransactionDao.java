@@ -21,10 +21,15 @@ public class TransactionDao {
     Function<String, Transaction> mapper = line ->  {
         String[] data = line.split(",");
         TransactionType type = "credit".equals(data[5]) ? TransactionType.CREDIT : TransactionType.DEBIT;
-        Transaction transaction = new Transaction(Integer.parseInt(data[0])
-                                                , CommonUtility.getDate(data[1], CommonUtility.SIMPLE_FORMAT)
-                                                , Double.parseDouble(data[2])
-                                                , Integer.parseInt(data[3]), type);
+        Transaction transaction = null;
+        try {
+            transaction = new Transaction(Integer.parseInt(data[0])
+                                                    , CommonUtility.getDate(data[1], CommonUtility.SIMPLE_FORMAT)
+                                                    , Double.parseDouble(data[2])
+                                                    , Integer.parseInt(data[3]), type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return transaction;
     };
 

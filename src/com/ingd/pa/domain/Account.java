@@ -13,34 +13,25 @@ public class Account {
 
     private double balance;
 
+    public Account(int accountId, int customerId, Date lastAccessDate, double balance) {
+        this.accountId = accountId;
+        this.customerId = customerId;
+        this.lastAccessDate = lastAccessDate;
+        this.balance = balance;
+    }
+
     private List<Transaction> transactions;
 
     public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
-
     public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setLastAccessDate(Date lastAccessDate) {
-        this.lastAccessDate = lastAccessDate;
-    }
-
     public Date getLastAccessDate() {
         return this.lastAccessDate;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public double getBalance() {
