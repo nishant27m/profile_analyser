@@ -1,7 +1,11 @@
 package com.ingd.pa.service;
 
 import com.ingd.pa.domain.Classification;
+import com.ingd.pa.domain.Customer;
+import com.ingd.pa.domain.Transaction;
+import com.ingd.pa.domain.TransactionType;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,6 +16,12 @@ public class BigSpender implements IExecuteRule {
 
     @Override
     public Classification execute(Map<String, Object> context) {
-        return null;
+        Customer customer = (Customer) context.get("customer");
+        Double balance = (Double) context.get("balance");
+        List<Transaction> transactions = customer.getAccounts().get(0).getTransactions();
+        Double spentAmount = transactions.stream().filter(transaction -> transaction.getTransactionType() == TransactionType.DEBIT)
+                            .mapToDouble(transaction -> transaction.getAmount()).sum();
+        Double percentage = spentAmount / balance * 100;
+        return percentage > 80 ? Classification.Big_Spender : null;
     }
 }

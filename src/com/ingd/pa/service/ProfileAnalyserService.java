@@ -3,9 +3,7 @@ package com.ingd.pa.service;
 import com.ingd.pa.dao.CustomerDao;
 import com.ingd.pa.dao.TransactionDao;
 import com.ingd.pa.domain.Classification;
-import com.ingd.pa.domain.Customer;
 import com.ingd.pa.domain.Output;
-import com.ingd.pa.domain.Type;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,18 +35,22 @@ public class ProfileAnalyserService {
         Output output = new Output();
         double asOfbalance = transactionDao.getBalance(customerId, new Date());
         output.setBalance(asOfbalance);
-        Customer customer = customerDao.getCustomer(customerId, startDate, endDate);
-        double balance = transactionDao.getBalance(customerId, startDate);
         Map<String, Object> properties = new HashMap<>();
-        properties.put("customer", customer);
-        properties.put("balance", balance);
-        Set<Classification> classifications = getAllRules().stream().map(rule -> rule.execute(properties)).collect(Collectors.toSet());
+        properties.put("customer", customerDao.getCustomer(customerId, startDate, endDate));
+        properties.put("balance", transactionDao.getBalance(customerId, startDate));
+        properties.put("customer_id", customerId);
+        Set<Classification> classifications = getAllRules().stream().map(rule -> rule.execute(properties))
+                .filter(value -> value != null).collect(Collectors.toSet());
         output.setClassifications(classifications);
         output.setBalance(asOfbalance);
         return output;
     }
 
-    List<IExecuteRule> getAllRules() {
+    /**
+     * This method returns rules to be processed.
+     * @return list of rules.
+     */
+    private List<IExecuteRule> getAllRules() {
         List<IExecuteRule> rules = new ArrayList<>();
         rules.add(new AfternoonPerson());
         rules.add(new BigSpender());
